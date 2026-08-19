@@ -77,12 +77,12 @@ public class BrowserActivity extends BaseActivity {
 
         btnRefresh.setOnClickListener(v -> webView.reload());
 
-        btnGo.setOnClickListener(v -> loadUrl());
+        btnGo.setOnClickListener(v -> navigate());
 
         urlInput.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_GO ||
                     (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-                loadUrl();
+                navigate();
                 return true;
             }
             return false;
@@ -90,11 +90,11 @@ public class BrowserActivity extends BaseActivity {
 
         String url = getIntent().getStringExtra("url");
         if (url != null && !url.isEmpty()) {
-            loadUrl(url);
+            webView.loadUrl(url);
         }
     }
 
-    private void loadUrl() {
+    private void navigate() {
         String input = urlInput.getText().toString().trim();
         if (input.isEmpty()) {
             MsgUtil.showMsg("请输入网址");
