@@ -43,7 +43,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("keystore/bili_terminal.p12")
+            storeFile rootProject.file("keystore/bili_terminal.p12")
             storePassword "bili123456"
             keyAlias "biliterminal"
             keyPassword "bili123456"
