@@ -40,6 +40,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             put("input_int", 2);
             put("input_float", 3);
             put("input_string", 4);
+            put("button", 5);
 
         }
     };
@@ -72,6 +73,9 @@ public class SettingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             case -2:
                 return new TitleHolder(
                         LayoutInflater.from(this.context).inflate(R.layout.cell_setting_title, parent, false));
+            case 5:
+                return new ButtonHolder(
+                        LayoutInflater.from(this.context).inflate(R.layout.cell_setting_button, parent, false));
             default:
                 return new SwitchHolder(
                         LayoutInflater.from(this.context).inflate(R.layout.cell_setting_switch, parent, false));
@@ -103,6 +107,10 @@ public class SettingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             case 4:
                 InputHolder inputHolder = (InputHolder) holder;
                 inputHolder.bind(settingSection);
+                break;
+            case 5:
+                ButtonHolder buttonHolder = (ButtonHolder) holder;
+                buttonHolder.bind(settingSection);
                 break;
             default:
                 SwitchHolder switchHolder = (SwitchHolder) holder;
@@ -144,6 +152,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public static class ChooseHolder extends RecyclerView.ViewHolder {
         final RadioButton chocola;
         final RadioButton vanilla; // 我在思考这样的命名方式是否合理（玩艹猫玩的
+        final RadioButton coconut;
         final TextView name;
         final TextView desc;
 
@@ -151,6 +160,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             super(itemView);
             chocola = itemView.findViewById(R.id.setting_choose_chocola);
             vanilla = itemView.findViewById(R.id.setting_choose_vanilla);
+            coconut = itemView.findViewById(R.id.setting_choose_coconut);
             desc = itemView.findViewById(R.id.setting_choose_desc);
             name = itemView.findViewById(R.id.setting_choose_name);
         }
@@ -167,13 +177,36 @@ public class SettingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             chocola.setText(strings[0]);
             vanilla.setText(strings[1]);
 
-            boolean value = SharedPreferencesUtil.getBoolean(settingSection.id,
-                    Boolean.parseBoolean(settingSection.defaultValue));
-            chocola.setChecked(value);
-            vanilla.setChecked(!value);
+            boolean threeOption = strings.length >= 3;
+            if (threeOption) {
+                coconut.setText(strings[2]);
+                coconut.setVisibility(View.VISIBLE);
+            } else {
+                coconut.setVisibility(View.GONE);
+            }
 
-            chocola.setOnCheckedChangeListener(
-                    (buttonView, isChecked) -> SharedPreferencesUtil.putBoolean(settingSection.id, isChecked)); // 有些选项的true和false不能改了，所以交换
+            int value = SharedPreferencesUtil.getInt(settingSection.id, parseIntSafe(settingSection.defaultValue));
+            chocola.setChecked(value == 0);
+            vanilla.setChecked(value == 1);
+            coconut.setChecked(value == 2);
+
+            chocola.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (isChecked) SharedPreferencesUtil.putInt(settingSection.id, 0);
+            });
+            vanilla.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (isChecked) SharedPreferencesUtil.putInt(settingSection.id, 1);
+            });
+            coconut.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (isChecked) SharedPreferencesUtil.putInt(settingSection.id, 2);
+            });
+        }
+
+        private int parseIntSafe(String s) {
+            try {
+                return Integer.parseInt(s);
+            } catch (Exception e) {
+                return 0;
+            }
         }
     }
 
@@ -264,6 +297,33 @@ public class SettingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         }
                     });
             }
+        }
+    }
+
+    public static class ButtonHolder extends RecyclerView.ViewHolder {
+        final TextView text;
+        final TextView desc;
+
+        public ButtonHolder(@NonNull View itemView) {
+            super(itemView);
+            text = itemView.findViewById(R.id.setting_button_text);
+            desc = itemView.findViewById(R.id.setting_button_desc);
+        }
+
+        public void bind(SettingSection settingSection) {
+            text.setText(settingSection.name);
+            if (settingSection.desc == null || settingSection.desc.isEmpty()) {
+                desc.setVisibility(View.GONE);
+            } else {
+                desc.setText(settingSection.desc);
+                desc.setVisibility(View.VISIBLE);
+            }
+            itemView.setOnClickListener(v -> {
+                Object action = settingSection.extra;
+                if (action instanceof Runnable) {
+                    ((Runnable) action).run();
+                }
+            });
         }
     }
 

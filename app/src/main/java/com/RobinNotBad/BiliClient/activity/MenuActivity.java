@@ -60,6 +60,7 @@ public class MenuActivity extends BaseActivity {
         put("search", new Pair<>("搜索", SearchActivity.class));
         put("dynamic", new Pair<>("动态", DynamicActivity.class));
         put("myspace", new Pair<>("我的", MySpaceActivity.class));
+        put("browser", new Pair<>("内置浏览器", BrowserActivity.class));
         put("message", new Pair<>("消息", MessageActivity.class));
         put("local", new Pair<>("缓存", LocalListActivity.class));
         put("settings", new Pair<>("设置", SettingMainActivity.class));
@@ -232,6 +233,7 @@ public class MenuActivity extends BaseActivity {
             add("search");
             add("dynamic");
             add("myspace");
+            add("browser");
             add("message");
             add("local");
             add("settings");

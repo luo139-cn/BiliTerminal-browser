@@ -20,6 +20,7 @@
             android:textSize="14sp" />
 
         <RadioGroup
+            android:id="@+id/setting_choose_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -36,6 +37,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="香草"
+                android:textColor="#fff"
+                android:textSize="12sp" />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/setting_choose_coconut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="椰子"
                 android:textColor="#fff"
                 android:textSize="12sp" />
         </RadioGroup>

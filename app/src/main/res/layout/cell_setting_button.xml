@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/activity_padding_horizontal"
+    android:layout_marginVertical="@dimen/list_margin_vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="3dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/setting_button_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:drawablePadding="6dp"
+            android:paddingHorizontal="6dp"
+            android:paddingVertical="10dp"
+            android:text="按钮类设置项"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/setting_button_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="6dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="4dp"
+            android:alpha="0.9"
+            android:text="点击执行操作"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

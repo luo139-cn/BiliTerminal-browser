@@ -85,6 +85,14 @@
             android:minWidth="40dp"
             android:paddingHorizontal="8dp"
             android:text="前往" />
+
+        <Button
+            android:id="@+id/btn_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="40dp"
+            android:paddingHorizontal="8dp"
+            android:text="历史" />
     </LinearLayout>
 
     <WebView
